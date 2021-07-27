@@ -21,7 +21,6 @@ public class Services_positive_scenario extends Generic_functions {
         try {
             app_launch();
             page_wait(4000);
-            driver.resetApp();
             value = driver.findElement(By.xpath(OR_reader( "welcome_page_title"))).isDisplayed();
             Assert.assertEquals(true,value);
             page_wait(4000);
@@ -38,6 +37,7 @@ public class Services_positive_scenario extends Generic_functions {
     public void login_page() throws Exception {
         try {
             app_login(2,4);
+            page_wait(4000);
         } catch (Exception e) {
             e.printStackTrace();
             takeScreenShot("login_page");
@@ -52,17 +52,19 @@ public class Services_positive_scenario extends Generic_functions {
 
     @Given("Services page")
     public void services_page() {
-
+        try{
+            value=driver.findElement(By.xpath("//XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]")).isDisplayed();
+            Assert.assertEquals(true,value);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @When("Click on Second opinion tile")
     public void click_second_opinion() {
-        healthcare_rec=driver.findElements(By.xpath("//XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther//XCUIElementTypeOther[1]"));
-        System.out.println(healthcare_rec.size());
-        for(MobileElement m:healthcare_rec){
-            System.out.println(m.getText());
-        }
-        healthcare_rec.get(0).click();
+    List<MobileElement> heal_rec=driver.findElements(By.xpath("//XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther//XCUIElementTypeOther[1]"));
+    System.out.println(heal_rec.size());
+      //  driver.findElement(By.linkText("Second Opinions")).click();
     }
 
     @Then("Verify second opinion page")

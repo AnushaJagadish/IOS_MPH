@@ -19,7 +19,6 @@ public class Header_positive_scenario extends Generic_functions {
         try {
             app_launch();
             page_wait(4000);
-            driver.resetApp();
             value = driver.findElement(By.xpath(OR_reader( "welcome_page_title"))).isDisplayed();
             Assert.assertEquals(true,value);
             page_wait(4000);
@@ -58,7 +57,7 @@ public class Header_positive_scenario extends Generic_functions {
         try {
             value = driver.findElement(By.xpath(OR_reader("hamburger"))).isDisplayed();
             Assert.assertEquals(true, value);
-            page_wait(1000);
+            page_wait(3000);
             click("hamburger");
         }catch (Exception e) {
             e.printStackTrace();
@@ -168,25 +167,21 @@ public class Header_positive_scenario extends Generic_functions {
             text = driver.findElement(By.xpath(OR_reader("header_contact_us_title"))).getText();
             Assert.assertEquals(text,"Contact Us");
             page_wait(2000);
-              driver.findElement(By.xpath(OR_reader("contactus_firstname"))).sendKeys("test");
+              driver.findElement(By.xpath(OR_reader("contactus_firstname"))).sendKeys(td_reader("contactus_firstname"));
               page_wait(2000);
-            driver.findElement(By.xpath(OR_reader("contactus_lastname"))).sendKeys("test");
+            driver.findElement(By.xpath(OR_reader("contactus_lastname"))).sendKeys(td_reader("contactus_lastname"));
             page_wait(2000);
-            driver.findElement(By.xpath(OR_reader("contactus_email"))).sendKeys("test@test.com");
+            driver.findElement(By.xpath(OR_reader("contactus_email"))).sendKeys(td_reader("contactus_email"));
          Actions builder=new Actions(driver);
          builder.click(driver.findElement(By.xpath(OR_reader("contactus_feedback")))).build().perform();
          builder.sendKeys("testing").build().perform();
             builder.click(driver.findElement(By.xpath(OR_reader("contactus_submit")))).build().perform();
-/*            page_wait(40000);
-            page_explicit_wait("contactus_success");
-            text=driver.findElement(By.xpath(OR_reader("contactus_success"))).getText();
-            Assert.assertEquals("Thank you",text);*/
                app_launch();
                page_wait(6000); launch_URL();navigated_header_page();
                 System.out.println("8");
         } catch (Exception e) {
             e.printStackTrace();
-          //  takeScreenShot("verify_contact_us");
+           takeScreenShot("verify_contact_us");
         }
     }
 /*TC_008_Validate  Privacy Policy dialogue box on clicking on the Privacy Policy*/
@@ -235,9 +230,9 @@ public class Header_positive_scenario extends Generic_functions {
     /*TC_010_Validate that the user is navigated to the Feedback Port   page  on clicking Feedback*/
     @Then("click on  Feedback")
     public void click_feedback() throws Exception {
-        page_explicit_wait("hamburger");
+        page_wait(3000);
         click_DropDown_Hamburger();
-        page_wait(6000);
+        page_wait(3000);
         click("header_feedback");
         page_wait(9000);
     }
@@ -246,13 +241,12 @@ public class Header_positive_scenario extends Generic_functions {
     public void verify_feedback_port() throws Exception {
         try {
             page_wait(20000);
-            driver.findElement(By.xpath(OR_reader("your_feedback"))).sendKeys("Test");
-            driver.findElement(By.xpath(OR_reader("feedback_details"))).sendKeys("test");
+            driver.findElement(By.xpath(OR_reader("your_feedback"))).sendKeys(td_reader("your_feedback"));
+            driver.findElement(By.xpath(OR_reader("feedback_details"))).sendKeys(td_reader("feedback_details"));
             page_wait(4000);
-            driver.findElement(By.xpath(OR_reader("feedback_email"))).sendKeys("test@test.com");
-            page_wait(5000);
+            driver.findElement(By.xpath(OR_reader("feedback_email"))).sendKeys(td_reader("feedback_email"));
+            page_wait(7000);
             click("feedback_share");
-            page_wait(8000);
             System.out.println("6");
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,12 +256,14 @@ public class Header_positive_scenario extends Generic_functions {
     @And("Verify the thank you message")
     public void verify_thankYou_message() throws Exception {
         try{
-            // page_wait(6000);
+            page_wait(10000);
             text=driver.findElement(By.xpath(OR_reader("feedback_thankyou"))).getText();
             Assert.assertEquals("Thank you for your feedback.",text);
+            driver.resetApp();
             driver.launchApp();
-            page_wait(2000);
+            page_wait(6000);
             launch_URL();
+            page_wait(3000);
             navigated_header_page();
         }
         catch(Exception e){
